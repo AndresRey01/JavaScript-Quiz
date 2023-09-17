@@ -1,4 +1,5 @@
 const questions = [
+    // Questions for the quiz in an array
     {
         question: "What does the acronym `DOM` stand for in JavaScript?",
         answers: [
@@ -36,21 +37,21 @@ const questions = [
         ]
     }
 ];
-
+// these const allow the ids from the html to be grabbed
 const questionElement = document.getElementById("question");
 const answerButtons = document.getElementById("answer-buttons");
 const nextButton = document.getElementById("next-btn");
 
 let currentQuestionIndex = 0;
 let score = 0;
-
+// this starts the quiz off 
 function startQuiz(){
     currentQuestionIndex = 0;
     score = 0;
     nextButton.innerHTML = "Next";
     showQuestion();
 }
-
+// this function grabs the questions from the array above
 function showQuestion(){
     resetState();
     let currentQuestion = questions[currentQuestionIndex];
@@ -71,14 +72,14 @@ function showQuestion(){
 }
 
 
-
+// this resets the original questions so they are not shown in the webpage
 function resetState(){
     nextButton.style.display = "none";
     while(answerButtons.firstChild){
         answerButtons.removeChild(answerButtons.firstChild);
     }
 }
-
+// gives correct or incorrect depending on which answer was chosen
 function selectAnswer(e){
     const selectedBtn = e.target;
     const isCorrect = selectedBtn.dataset.correct === "true";
@@ -96,7 +97,7 @@ function selectAnswer(e){
     });
     nextButton.style.display = "block";
 }
-
+// this function shows score at the end of the game 
 function showScore(){
     resetState();
     questionElement.innerHTML = `You scored ${score} out of ${questions.
@@ -114,7 +115,6 @@ function handleNextButton(){
         showScore();
     }
 }
-
 
 
 nextButton.addEventListener("click", ()=>{
