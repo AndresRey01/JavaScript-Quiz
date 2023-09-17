@@ -6,26 +6,21 @@
     <link rel="stylesheet" href="./assets/style.css">
     <title>JavaScript Quiz</title>
 </head>
-
 <body>
-    <nav class="highscore">View HighScores!</nav>
-    <span class="timer">
-        <span id="time">75</span>
-    </span>
-    <header class="header">JavaScript Quiz</header>
-    <p class="content">Press the start button to begin the quiz!</p>
+    <div class="app">
+        <h1>JavaScript Quiz</h1>
+        <div class="quiz">
+            <h2 id="question">Question goes here</h2>
+            <div id="answer-buttons">
+                <button class="btn">Answer 1</button>
+                <button class="btn">Answer 2</button>
+                <button class="btn">Answer 3</button>
+                <button class="btn">Answer 4</button>
+            </div>
+            <button id="next-btn">Next</button>
+        </div>
+    </div>
 
-    <div class="questionText"></div>
-        <input type="checkbox" id="A" class="check">
-        <div class="choiceA"></div>
-        <input type="checkbox" id="B" class="check">
-        <div class="choiceB"></div>
-        <input type="checkbox" id="C" class="check">
-        <div class="choiceC"></div>
-        <input type="checkbox" id="D" class="check">
-        <div class="choiceD"></div>
-    <button id="start-btn">Start</button>
-    <button id="next-btn" class="hide">Next</button>
-<script src="script.js"></script>  
+    <script src="script.js"></script>  
 </body>
 </html>

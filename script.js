@@ -1,118 +1,129 @@
-var timer = document.querySelector('#time');
-var content = document.querySelector('.content');
-var questionText = document.querySelector('.questionText');
-var startBtn = document.getElementById('start-btn');
-var nextBtn = document.getElementById('next-btn');
-var choiceA = document.querySelector('.choiceA');
-var choiceB = document.querySelector('.choiceB');
-var choiceC = document.querySelector('.choiceC');
-var choiceD = document.querySelector('.choiceD');
-var checkedA = document.querySelector('#A');
-var checkedB = document.querySelector('#B');
-var checkedC = document.querySelector('#C');
-var checkedD = document.querySelector('#D');
-var highscore = 0
-var firstQuestion = {
-    question:"What does `DOM` stand for in JavaScript?",
-        choice1:"Dollar Object Modem",
-        choice2:"Document Original Module",
-        choice3:"Document Object Model",
-        choice4:"Dogs Over Monkeys"
-}
-
-var nextQuestions = [ 
+const questions = [
     {
-    question: "What is the purpose of the console.log() function?",
-    choice1: "To open a new tab",
-    choice2: "It doesn't do anything",
-    choice3: "To log something onto the screen",
-    choice4: "To open up the console"
+        question: "What does the acronym `DOM` stand for in JavaScript?",
+        answers: [
+            { text: "Document Object Model", correct: true},
+            { text: "Data Object Model", correct: false},
+            { text: "Document Orientation Model", correct: false},
+            { text: "Document Object Manipulation", correct: false},
+        ]
     },
     {
-    question:"What does the title element represent in html?",
-    choice1: "The header of the webpage",
-    choice2: "The name of the document on the tab",
-    choice3: "Content shown on the webpage",
-    choice4: "Listed items on a webpage"
+        question: "Which keyword is used to declare a variable in JavaScript?",
+        answers: [
+            { text: "int", correct: false},
+            { text: "variable", correct: false},
+            { text: "var", correct: true},
+            { text: "declare", correct: false},
+        ]
     },
     {
-    question: "Which type of sheet would you create to properly style your webpage?",
-    choice1: "Javascript",
-    choice2: "HTML",
-    choice3: "Reset",
-    choice4: "Stylesheet"
+        question: "What is the result of typeof null in JavaScript?",
+        answers: [
+            { text: "null", correct: false},
+            { text: "object", correct: true},
+            { text: "undefined", correct: false},
+            { text: "string", correct: false},
+        ]
+    },
+    {
+        question: "What does JavaScript primarily add to a website?",
+        answers: [
+            { text: "Styling", correct: false},
+            { text: "Interactivity", correct: true},
+            { text: "Structure", correct: false},
+            { text: "Animation", correct: false},
+        ]
     }
-]
+];
 
+const questionElement = document.getElementById("question");
+const answerButtons = document.getElementById("answer-buttons");
+const nextButton = document.getElementById("next-btn");
 
-function startGame() {
-    startBtn.classList.add('hide');
-    content.classList.add('hide');
-    nextBtn.classList.add('show');
-    var timerStart = 75;
-    var startTimer = setInterval(function() {
-        timerStart--;
-        timer.textContent = timerStart;
-        if(timerStart <= 0)
-        clearInterval(startTimer);
-    }, 1000);
-    questionText.textContent = firstQuestion.question;
-    choiceA.textContent = firstQuestion.choice1;
-    choiceB.textContent = firstQuestion.choice2;
-    choiceC.textContent = firstQuestion.choice3;
-    choiceD.textContent = firstQuestion.choice4;
+let currentQuestionIndex = 0;
+let score = 0;
+
+function startQuiz(){
+    currentQuestionIndex = 0;
+    score = 0;
+    nextButton.innerHTML = "Next";
+    showQuestion();
 }
 
-function secondQuestion() {
-    if ((checkedA.checked) ||
-    (checkedB.checked) ||
-    (checkedD.checked)) {
-        window.alert("wrong!")
-        checkedA.checked = false;
-        checkedB.checked = false;
-        checkedD.checked = false;
-questionText.textContent = nextQuestions[0].question;
-choiceA.textContent = nextQuestions[0].choice1;
-choiceB.textContent = nextQuestions[0].choice2;
-choiceC.textContent = nextQuestions[0].choice3;
-choiceD.textContent = nextQuestions[0].choice4;
+function showQuestion(){
+    resetState();
+    let currentQuestion = questions[currentQuestionIndex];
+    let questionNo = currentQuestionIndex + 1;
+    questionElement.innerHTML = questionNo + ". " + currentQuestion.
+    question;
 
-} else if(checkedC.checked) {
-    window.alert("correct!")
-    checkedC.checked = false;
-    highscore++;
-questionText.textContent = nextQuestions[0].question;
-choiceA.textContent = nextQuestions[0].choice1;
-choiceB.textContent = nextQuestions[0].choice2;
-choiceC.textContent = nextQuestions[0].choice3;
-choiceD.textContent = nextQuestions[0].choice4;
-}}
-
-function thirdQuestion() {
-    if((checkedB.checked) ||
-    (checkedC.checked) ||
-    (checkedD.checked)) {
-        window.alert("wrong!")
-        checkedB.checked = false;
-        checkedC.checked = false;
-        checkedD.checked = false;
-questionText.textContent = nextQuestions[1].question;
-choiceA.textContent = nextQuestions[1].choice1;
-choiceB.textContent = nextQuestions[1].choice2;
-choiceC.textContent = nextQuestions[1].choice3;
-choiceD.textContent = nextQuestions[1].choice4;
-
-} else if(checkedA.checked) {
-    window.alert("correct!")
-    checkedA.checked = false;
-    highscore++;
-questionText.textContent = nextQuestions[1].question;
-choiceA.textContent = nextQuestions[1].choice1;
-choiceB.textContent = nextQuestions[1].choice2;
-choiceC.textContent = nextQuestions[1].choice3;
-choiceD.textContent = nextQuestions[1].choice4;
-}}
+    currentQuestion.answers.forEach(answer => {
+        const button = document.createElement("button");
+        button.innerHTML = answer.text;
+        button.classList.add("btn");
+        answerButtons.appendChild(button);
+        if(answer.correct){
+            button.dataset.correct = answer.correct;
+        }
+        button.addEventListener("click", selectAnswer);
+    });
+}
 
 
-startBtn.addEventListener('click', startGame);
-nextBtn.addEventListener('click', secondQuestion,);
+
+function resetState(){
+    nextButton.style.display = "none";
+    while(answerButtons.firstChild){
+        answerButtons.removeChild(answerButtons.firstChild);
+    }
+}
+
+function selectAnswer(e){
+    const selectedBtn = e.target;
+    const isCorrect = selectedBtn.dataset.correct === "true";
+    if(isCorrect){
+        selectedBtn.classList.add("correct");
+        score++;
+    }else{
+        selectedBtn.classList.add("incorrect");
+    }
+    Array.from(answerButtons.children).forEach(button => {
+        if(button.dataset.correct === "true"){
+            button.classList.add("correct");
+        }
+        button.disabled = true;
+    });
+    nextButton.style.display = "block";
+}
+
+function showScore(){
+    resetState();
+    questionElement.innerHTML = `You scored ${score} out of ${questions.
+    length}!`;
+    nextButton.innerHTML = "Play Again!";
+    nextButton.style.display = "block";
+}
+
+
+function handleNextButton(){
+    currentQuestionIndex++;
+    if(currentQuestionIndex < questions.length){
+        showQuestion();
+    }else{
+        showScore();
+    }
+}
+
+
+
+nextButton.addEventListener("click", ()=>{
+    if(currentQuestionIndex < questions.length){
+        handleNextButton();
+    }else{
+        startQuiz();
+    }
+})
+
+
+startQuiz();
