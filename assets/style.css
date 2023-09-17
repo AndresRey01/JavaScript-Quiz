@@ -31,3 +31,52 @@ p {
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     color: lightsalmon;
 }
+
+.questionText {
+    margin: 20px;
+    padding: 20px;
+    font-size: 25px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: lightsalmon;
+}
+
+#start-Btn {
+    align-items: center;
+    margin-left: 600px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
+}
+
+#next-btn {
+    margin-left: 600px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.hide {
+    display: none;
+}
+
+.show {
+    display: flex;
+    margin-left: 600px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+#A,
+#B,
+#C,
+#D {
+    display: flex;
+    margin: 1rem;
+}
+
+.choiceA,
+.choiceB,
+.choiceC,
+.choiceD {
+    position: relative;
+    margin-left: 50px;
+    padding: 2px;
+    font-size: 15px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: blue;
+}
