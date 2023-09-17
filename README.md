@@ -12,7 +12,7 @@ For this project I created a small questionare about JavaScript using JavaScript
 As the title says this is just a small quiz about JavaScript, This is a begginner quiz to help those just starting off in JS!
 
 Link to deployed website
-
+https://andresrey01.github.io/JavaScript-Quiz/
 
 
 Screenshot of the deployed webstie
